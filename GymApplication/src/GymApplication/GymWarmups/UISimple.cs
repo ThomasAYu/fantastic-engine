@@ -133,6 +133,7 @@ namespace GymWarmups
         /// </summary>
         public static void PrintWarmUpSetFormat() 
         {
+            /// TODO refactor - extract method for displaying Warm-up sets list.
             Console.WriteLine("\nYour current warm-up sets are:");
             for (var i = 0; i < UIWarmUpSets.Count; i++)
             {
@@ -160,7 +161,6 @@ namespace GymWarmups
             Console.WriteLine("Move 'A', 'B': Moves the warm-up set currently in position 'A' to position 'B'.");
             Console.WriteLine("Or 'b' to go back to the Main Menu.");
             Console.WriteLine("\nNote: Use 'kg' at the end of any weight value to set an explicit weight.");
-            
             Console.WriteLine("\n(eg. 'Add 3 @ 60' | 'Remove 3' | 'Move 2, 5')\n");
         }
     }

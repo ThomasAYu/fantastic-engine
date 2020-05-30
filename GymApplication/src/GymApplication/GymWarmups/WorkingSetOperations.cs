@@ -13,6 +13,7 @@ namespace GymWarmups
         /// <param name="input"></param>
         public static WorkingSet WorkingSetParseIfValid(string input, List<WarmUpSet> warmUpSets) 
         {
+            // TODO refactor - abstract out for clarity and reuse. Consider moving into a different class.
             var roundingParsePass = false;
             double? roundingNumber = null;
 
@@ -63,6 +64,7 @@ namespace GymWarmups
                 Weight = weight
             };
 
+            // possibly create a bool for the rounding check to add clarity.
             if(roundingNumber != null)
             workingSet.RoundToNearestNumber = (double)roundingNumber; 
 
@@ -76,6 +78,7 @@ namespace GymWarmups
         /// <param name="warmUpSets"></param>
         public static void PrintWarmUpSetsFromWorkingSet(WorkingSet workingSet, List<WarmUpSet> warmUpSets)
         {
+            // TODO refactor. Create a weight calculator method and rep v reps word assigner.
             Console.WriteLine($"You set the working set reps to {workingSet.Repititions} and the weight to {workingSet.Weight}kgs.\n");
 
             Console.WriteLine("Your warm-up sets for the given working set are:\n");

@@ -13,6 +13,9 @@ namespace GymWarmups
         /// <returns></returns>
         public static List<WarmUpSet> WarmUpSetManipulatorBasedOnInput(string input, List<WarmUpSet> warmUpSets)
         {
+            // TODO refactor into subclasses?
+            // TODO create string parser class.
+
             if (input.Contains("Add"))
             {
                 warmUpSets = ParseAddWarmUpSetInputIfValid(input, warmUpSets);
@@ -49,6 +52,8 @@ namespace GymWarmups
         /// <returns></returns>
         public static List<WarmUpSet> ParseAddWarmUpSetInputIfValid(string input, List<WarmUpSet> warmUpSets)
         {
+
+            // TODO refactor separate reusable methods from repeated conditionals and checks. - 
             const int addWordLength = 3;
             const int kgWordLength = 2;
 
@@ -91,6 +96,7 @@ namespace GymWarmups
         /// <returns></returns>
         private static List<WarmUpSet> AddValidWarmUpSet(List<WarmUpSet> warmUpSets, int repititions, double weight, bool usePercentage)
         {
+            // TODO simplify parameters by creating the WarmUpSet separately and passing that through.
             var set = new WarmUpSet
             {
                 Repititions = repititions,
