@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\GymApplication\GymWarmups\GymWarmups.csproj" />
+    <ProjectReference Include="..\..\src\GymWarmups\GymWarmups\GymWarmups.csproj" />
   </ItemGroup>
 
 </Project>

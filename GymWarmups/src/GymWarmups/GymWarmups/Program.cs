@@ -12,7 +12,7 @@ namespace GymWarmups
 
             UISimple.PrintWelcome();
             UISimple.MenuBase(warmUpSetsCollection);
-            Console.WriteLine("\nThank you for using The Gym App (Working Title)!");
+            Console.WriteLine("\nThank you for using The Gym Warmups App (Working Title)!");
             Console.ReadLine();
         }
     }
