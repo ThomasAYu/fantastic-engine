@@ -13,23 +13,23 @@ namespace GymWarmups.Tests
             // Arrange
             var tempWarmUpSet = new List<WarmUpSet>
             {
-                new WarmUpSet { Repititions = 8, UsePercentageOn = false, Weight = 20 },
-                new WarmUpSet { Repititions = 5, UsePercentageOn = true, Weight = 50 },
-                new WarmUpSet { Repititions = 4, UsePercentageOn = true, Weight = 60 },
-                new WarmUpSet { Repititions = 3, UsePercentageOn = true, Weight = 70 },
-                new WarmUpSet { Repititions = 2, UsePercentageOn = true, Weight = 80 },
-                new WarmUpSet { Repititions = 1, UsePercentageOn = true, Weight = 90 },
-                new WarmUpSet { Repititions = 1, UsePercentageOn = true, Weight = 95 },
+                new WarmUpSet { Repititions = 8, UsePercentage = false, Weight = 20 },
+                new WarmUpSet { Repititions = 5, UsePercentage = true, Weight = 50 },
+                new WarmUpSet { Repititions = 4, UsePercentage = true, Weight = 60 },
+                new WarmUpSet { Repititions = 3, UsePercentage = true, Weight = 70 },
+                new WarmUpSet { Repititions = 2, UsePercentage = true, Weight = 80 },
+                new WarmUpSet { Repititions = 1, UsePercentage = true, Weight = 90 },
+                new WarmUpSet { Repititions = 1, UsePercentage = true, Weight = 95 },
             };
             var expected = new List<WarmUpSet>
             {
-                new WarmUpSet { Repititions = 8, UsePercentageOn = false, Weight = 20 },
-                new WarmUpSet { Repititions = 4, UsePercentageOn = true, Weight = 60 },
-                new WarmUpSet { Repititions = 3, UsePercentageOn = true, Weight = 70 },
-                new WarmUpSet { Repititions = 2, UsePercentageOn = true, Weight = 80 },
-                new WarmUpSet { Repititions = 5, UsePercentageOn = true, Weight = 50 },
-                new WarmUpSet { Repititions = 1, UsePercentageOn = true, Weight = 90 },
-                new WarmUpSet { Repititions = 1, UsePercentageOn = true, Weight = 95 },
+                new WarmUpSet { Repititions = 8, UsePercentage = false, Weight = 20 },
+                new WarmUpSet { Repititions = 4, UsePercentage = true, Weight = 60 },
+                new WarmUpSet { Repititions = 3, UsePercentage = true, Weight = 70 },
+                new WarmUpSet { Repititions = 2, UsePercentage = true, Weight = 80 },
+                new WarmUpSet { Repititions = 5, UsePercentage = true, Weight = 50 },
+                new WarmUpSet { Repititions = 1, UsePercentage = true, Weight = 90 },
+                new WarmUpSet { Repititions = 1, UsePercentage = true, Weight = 95 },
             };
 
             int initalIndex = 2;
@@ -56,7 +56,7 @@ namespace GymWarmups.Tests
             var result = WarmUpSetOperations.ParseAddWarmUpSetInputIfValid("Add 3 @ 60kg", tempWarmUpSet);
 
             // Assert
-            Assert.AreEqual(false, result[0].UsePercentageOn);
+            Assert.AreEqual(false, result[0].UsePercentage);
         }
     }
 }

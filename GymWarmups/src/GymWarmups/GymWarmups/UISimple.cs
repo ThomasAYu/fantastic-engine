@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace GymWarmups
 {
@@ -24,15 +25,14 @@ namespace GymWarmups
         /// </summary>
         public static void MenuBase(List<WarmUpSet> warmUpSetsDefault) 
         {
-            var DontQuit = true;
             UIWarmUpSets = warmUpSetsDefault;
 
-            while (DontQuit)
+            while (true)
             {
-                PrintMainMenuOptions();
-                var input = Console.ReadLine();
+                PrintMainMenuUserOptions();
+                var userMenuSelection = Console.ReadLine();
 
-                switch(input)
+                switch(userMenuSelection)
                 {
                     case "SetWork":
                         WorkingSetMenu();
@@ -41,37 +41,10 @@ namespace GymWarmups
                         WarmUpSetMenu();
                         break;
                     case "q":
-                        DontQuit = false;
-                        break;
+                        return;
                     default:
                         Console.WriteLine("Please enter a valid option\n");
                         break;
-                }
-            }
-        }
-
-        /// <summary>
-        ///  Sets up the Warm-up set Menu.
-        /// </summary>
-        private static void WarmUpSetMenu()
-        {
-            var warmUpSetLooping = true;
-            while (warmUpSetLooping)
-            {
-                PrintWarmUpSetFormat();
-
-                var input = Console.ReadLine();
-
-                if (input == "b")
-                    return;
-                try
-                {
-                    UIWarmUpSets = WarmUpSetOperations.WarmUpSetManipulatorBasedOnInput(input, UIWarmUpSets);
-                }
-                catch(Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    continue;
                 }
             }
         }
@@ -82,45 +55,62 @@ namespace GymWarmups
         /// <returns></returns>
         private static void WorkingSetMenu()
         {
-            var workingSetLooping = true;
-            while (workingSetLooping)
+            while (true)
             {
-                PrintWorkingSetFormat();
+                PrintWorkingSetUserOptions();
                 // TODO add in Working set rounding options. Round to nearest 2.5kgs is default, but 2kgs or 1kg etc. rounding could also be relevant.
+                var userInputForWorkingSet = Console.ReadLine();
 
-                var input = Console.ReadLine();
-
-                if (input == "b")
-                    return;
-                try
-                {
-                    UIWorkingSet = WorkingSetOperations.WorkingSetParseIfValid(input, UIWarmUpSets);
-                }
-                catch(Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    continue;
-                }
-                if (UIWorkingSet != null)
-                    WorkingSetOperations.PrintWarmUpSetsFromWorkingSet(UIWorkingSet, UIWarmUpSets);
+                if (userInputForWorkingSet == "b") return;
+                
+                UIWorkingSet = WorkingSetOperations.SetWorkingSet(userInputForWorkingSet);
+               
+                if (UIWorkingSet != null) WorkingSetOperations.PrintWarmUpSetsFromWorkingSet(UIWorkingSet, UIWarmUpSets);
             }
         }
 
         /// <summary>
-        /// Prints out options and format while at the Working set Menu.
+        ///  Sets up the Warm-up set Menu.
         /// </summary>
-        private static void PrintWorkingSetFormat()
+        private static void WarmUpSetMenu()
         {
-            Console.WriteLine("\nWorking Set Setter Options:\n");
-            Console.WriteLine("Please enter your first working set. (Format: 'RepNumber' @ 'WorkingWeightNumber' eg. 4 @ 105)"); 
-            Console.WriteLine("Or 'b' to go back to the Main Menu.\n");
-            Console.WriteLine("Note: Add ', x' at the end to adjust rounding for warm-up sets. Default is 2.5kg. (eg. 4 @ 105, 1)");
+            while (true)
+            {
+                PrintWarmUpSetsWithoutWorkingSet();
+                PrintWarmUpSetUserOptions();
+                var userInputForWarmUpSetModification = Console.ReadLine();
+
+                if (userInputForWarmUpSetModification == "b") return;
+
+                UIWarmUpSets = WarmUpSetOperations.WarmUpSetModifier(userInputForWarmUpSetModification, UIWarmUpSets);
+            }
+        }
+
+        private static void PrintWarmUpSetsWithoutWorkingSet()
+        {
+            Console.WriteLine("\nYour current warm-up sets are:");
+            for (var i = 0; i < UIWarmUpSets.Count; i++)
+            {
+                var repsWord = "rep";
+
+                bool repsWordisPlural = UIWarmUpSets[i].Repititions > 1;
+                if (repsWordisPlural) repsWord = "reps";
+
+                if (UIWarmUpSets[i].UsePercentage)
+                {
+
+                    Console.WriteLine($"{i + 1}) {UIWarmUpSets[i].Repititions} {repsWord} at {UIWarmUpSets[i].Weight}% of the working weight.");
+                    continue;
+
+                }
+                Console.WriteLine($"{i + 1}) {UIWarmUpSets[i].Repititions} {repsWord} at {UIWarmUpSets[i].Weight}kgs.");
+            }
         }
 
         /// <summary>
         /// Prints out possible input options when at the insert Working set Menu.
         /// </summary>
-        public static void PrintMainMenuOptions()
+        public static void PrintMainMenuUserOptions()
         {
             Console.WriteLine("\nMain Menu Options:");
             Console.WriteLine("\nSetWork : Set a working weight.");
@@ -129,31 +119,22 @@ namespace GymWarmups
         }
 
         /// <summary>
+        /// Prints out options and format while at the Working set Menu.
+        /// </summary>
+        private static void PrintWorkingSetUserOptions()
+        {
+            Console.WriteLine("\nWorking Set Setter Options:\n");
+            Console.WriteLine("Please enter your first working set. (Format: 'RepNumber' @ 'WorkingWeightNumber' eg. 4 @ 105)"); 
+            Console.WriteLine("Or 'b' to go back to the Main Menu.\n");
+            Console.WriteLine("Note: Add ', x' at the end to adjust rounding for warm-up sets. Default is 2.5kg. (eg. 4 @ 105, 1)");
+        }
+
+
+        /// <summary>
         /// Prints out possible input options when at the Edit Warm-up sets Menu.
         /// </summary>
-        public static void PrintWarmUpSetFormat() 
+        public static void PrintWarmUpSetUserOptions()
         {
-            /// TODO refactor - extract method for displaying Warm-up sets list.
-            Console.WriteLine("\nYour current warm-up sets are:");
-            for (var i = 0; i < UIWarmUpSets.Count; i++)
-            {
-                var repsWord = "rep";
-
-                if (UIWarmUpSets[i].Repititions > 1)
-                    repsWord = "reps";
-
-                if (UIWarmUpSets[i].UsePercentageOn == true)
-                {
-
-                    Console.WriteLine($"{i + 1}) {UIWarmUpSets[i].Repititions} {repsWord} at {UIWarmUpSets[i].Weight}% of the working weight."); 
-
-                }
-                else
-                {
-                    Console.WriteLine($"{i + 1}) {UIWarmUpSets[i].Repititions} {repsWord} at {UIWarmUpSets[i].Weight}kgs."); 
-                }
-            }
-
             Console.WriteLine("\nWarm-up Set Editor Options:\n");
             Console.WriteLine("Add 'RepNumber' @ 'PercentageNumber': Adds a new warm-up set to the end of the list.");
             Console.WriteLine("Insert 'Y', 'RepNumber' @ 'PercentageNumber': Inserts a new warm-up set at position 'Y'.");

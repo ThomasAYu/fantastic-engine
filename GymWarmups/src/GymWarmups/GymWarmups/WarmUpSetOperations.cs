@@ -11,7 +11,7 @@ namespace GymWarmups
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static List<WarmUpSet> WarmUpSetManipulatorBasedOnInput(string input, List<WarmUpSet> warmUpSets)
+        public static List<WarmUpSet> WarmUpSetModifier(string input, List<WarmUpSet> warmUpSets)
         {
             // TODO refactor into subclasses?
             // TODO create string parser class.
@@ -101,7 +101,7 @@ namespace GymWarmups
             {
                 Repititions = repititions,
                 Weight = weight,
-                UsePercentageOn = usePercentage
+                UsePercentage = usePercentage
             };
 
             warmUpSets.Add(set);
@@ -169,7 +169,7 @@ namespace GymWarmups
             {
                 Repititions = repititions,
                 Weight = weight,
-                UsePercentageOn = usePercentage
+                UsePercentage = usePercentage
             };
             warmUpSets.Insert((warmUpSetNumber - 1), set);
 

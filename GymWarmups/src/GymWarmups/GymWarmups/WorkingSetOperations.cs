@@ -11,7 +11,7 @@ namespace GymWarmups
         /// Validates incoming string before passing it on to be parsed. Returns exception for non-valid strings.
         /// </summary>
         /// <param name="input"></param>
-        public static WorkingSet WorkingSetParseIfValid(string input, List<WarmUpSet> warmUpSets) 
+        public static WorkingSet SetWorkingSet(string input) 
         {
             // TODO refactor - abstract out for clarity and reuse. Consider moving into a different class.
             var roundingParsePass = false;
@@ -84,7 +84,7 @@ namespace GymWarmups
             Console.WriteLine("Your warm-up sets for the given working set are:\n");
             foreach (var warmUpSet in warmUpSets)
             {
-                if (warmUpSet.UsePercentageOn == true) 
+                if (warmUpSet.UsePercentage == true) 
                 {
                     if (warmUpSet.Repititions > 1)
                         Console.WriteLine($" - {Math.Floor(workingSet.Weight * warmUpSet.Weight * 0.01 / workingSet.RoundToNearestNumber) * workingSet.RoundToNearestNumber}kgs for {warmUpSet.Repititions} reps.");
