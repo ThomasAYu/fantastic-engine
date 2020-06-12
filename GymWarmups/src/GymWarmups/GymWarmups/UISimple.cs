@@ -5,7 +5,7 @@ namespace GymWarmups
 {
     static class UISimple
     {
-        public static List<WarmUpSet> UIWarmUpSets { get; set; }
+        private static List<WarmUpSet> UIWarmUpSets { get; set; }
 
         /// <summary>
         /// Prints out the welcome message and Warm-up sets.
@@ -81,6 +81,9 @@ namespace GymWarmups
             }
         }
 
+        /// <summary>
+        /// Prints out current warm up sets without the use of a working set.
+        /// </summary>
         private static void PrintWarmUpSetsWithoutWorkingSet()
         {
             Console.WriteLine("\nYour current warm-up sets are:");
@@ -105,7 +108,7 @@ namespace GymWarmups
         /// <summary>
         /// Prints out possible input options when at the insert Working set Menu.
         /// </summary>
-        public static void PrintMainMenuUserOptions()
+        private static void PrintMainMenuUserOptions()
         {
             Console.WriteLine("\nMain Menu Options:");
             Console.WriteLine("\nSetWork : Set a working weight.");
@@ -124,11 +127,10 @@ namespace GymWarmups
             Console.WriteLine("Note: Add ', x' at the end to adjust rounding for warm-up sets. Default is 2.5kg. (eg. 4 @ 105, 1)");
         }
 
-
         /// <summary>
         /// Prints out possible input options when at the Edit Warm-up sets Menu.
         /// </summary>
-        public static void PrintWarmUpSetUserOptions()
+        private static void PrintWarmUpSetUserOptions()
         {
             Console.WriteLine("\nWarm-up Set Editor Options:\n");
             Console.WriteLine("Add 'RepNumber' @ 'PercentageNumber': Adds a new warm-up set to the end of the list.");

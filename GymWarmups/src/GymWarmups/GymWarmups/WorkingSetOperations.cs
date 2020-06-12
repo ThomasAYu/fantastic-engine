@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -9,23 +10,21 @@ namespace GymWarmups
     public static class WorkingSetOperations
     {
         /// <summary>
-        /// Validates incoming string before passing it on to be parsed. Returns exception for non-valid strings.
+        /// Tries to parse a string to a WorkingSet. Returns bool to indicate success and contains out parameter for the Working Set.
         /// </summary>
         /// <param name="input"></param>
         public static bool TryParseToWorkingSet(string userInputForWorkingSet, out WorkingSet workingSet)
         {
-            workingSet = new WorkingSet();
+            workingSet = null;
 
             string[] userInputForWorkingSetSplit = SplitUserInputForWorkingSet(userInputForWorkingSet);
             if (userInputForWorkingSetSplit == null) return false;
 
             workingSet = ParseUserInputSplitToWorkingSet(userInputForWorkingSetSplit);
+            if (workingSet == null) return false;
 
             return true;
-
         }
-
-
         /// <summary>
         /// Prints out the Warm-up sets given the input Working set.
         /// </summary>
@@ -69,6 +68,11 @@ namespace GymWarmups
             {
                 workingSet.RoundingNumber = GetRoundingNumber(userInputForWorkingSetSplit[2]);
                 if (workingSet.RoundingNumber == null) return null;
+            }
+            else 
+            { 
+                const double defaultRoundingNumber = 2.5;
+                workingSet.RoundingNumber = defaultRoundingNumber; 
             }
 
             workingSet.Repititions = GetRepititions(userInputForWorkingSetSplit[0]);

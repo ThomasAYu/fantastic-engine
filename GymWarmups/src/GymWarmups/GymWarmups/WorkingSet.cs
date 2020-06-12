@@ -6,11 +6,6 @@ namespace GymWarmups
 {
     public class WorkingSet : Set 
     {
-        public WorkingSet()
-        {
-            const double defaultRounding = 2.5;
-            RoundingNumber = defaultRounding;
-        }
         public double? RoundingNumber { get; set; }
     }
 }
