@@ -6,7 +6,7 @@ namespace GymWarmups
 {
     public class Set
     {
-        public int Repititions { get; set; }
-        public double Weight { get; set; }
+        public int? Repititions { get; set; }
+        public double? Weight { get; set; }
     }
 }

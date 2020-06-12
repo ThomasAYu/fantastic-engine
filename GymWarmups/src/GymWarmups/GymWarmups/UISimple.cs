@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading;
 
 namespace GymWarmups
 {
     static class UISimple
     {
-        public static WorkingSet UIWorkingSet { get; set; }
         public static List<WarmUpSet> UIWarmUpSets { get; set; }
 
         /// <summary>
@@ -30,9 +27,9 @@ namespace GymWarmups
             while (true)
             {
                 PrintMainMenuUserOptions();
-                var userMenuSelection = Console.ReadLine();
+                var userInputForMenuSelection = Console.ReadLine();
 
-                switch(userMenuSelection)
+                switch(userInputForMenuSelection)
                 {
                     case "SetWork":
                         WorkingSetMenu();
@@ -58,14 +55,12 @@ namespace GymWarmups
             while (true)
             {
                 PrintWorkingSetUserOptions();
-                // TODO add in Working set rounding options. Round to nearest 2.5kgs is default, but 2kgs or 1kg etc. rounding could also be relevant.
                 var userInputForWorkingSet = Console.ReadLine();
 
                 if (userInputForWorkingSet == "b") return;
                 
-                UIWorkingSet = WorkingSetOperations.SetWorkingSet(userInputForWorkingSet);
-               
-                if (UIWorkingSet != null) WorkingSetOperations.PrintWarmUpSetsFromWorkingSet(UIWorkingSet, UIWarmUpSets);
+                bool parseToWorkingSetSuccessful = WorkingSetOperations.TryParseToWorkingSet(userInputForWorkingSet, out WorkingSet workingSet);
+                if (parseToWorkingSetSuccessful) WorkingSetOperations.PrintWarmUpSetsFromWorkingSet(workingSet, UIWarmUpSets);
             }
         }
 

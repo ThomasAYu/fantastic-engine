@@ -9,8 +9,8 @@ namespace GymWarmups
         public WorkingSet()
         {
             const double defaultRounding = 2.5;
-            RoundToNearestNumber = defaultRounding;
+            RoundingNumber = defaultRounding;
         }
-        public double RoundToNearestNumber { get; set; }
+        public double? RoundingNumber { get; set; }
     }
 }
